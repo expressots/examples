@@ -1,9 +1,9 @@
 {
     "name": "expressots-with-docker",
     "version": "1.0.0",
-    "description": "A example of Dockerfile to add on your ExpressoTS project",
-    "author": "rafa-thayto",
-    "license": "UNLICENSED",
+    "description": "An opinionated Expresso TS Project running on Docker",
+    "author": "Rafael Thayto",
+    "license": "MIT",
     "scripts": {
         "prebuild": "rm -rf ./dist",
         "build": "tsc -p tsconfig.build.json && cp -R ./register-path.js tsconfig.build.json package.json ./dist",

@@ -9,9 +9,9 @@ WORKDIR /app
 # Install dependencies based on the preferred package manager
 COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
 RUN \
-  if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
-  elif [ -f package-lock.json ]; then npm ci; \
-  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile; \
+  if [ -f yarn.lock ]; then yarn --frozen-lockfile --production; \
+  elif [ -f package-lock.json ]; then npm ci --production; \
+  elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile --production; \
   else echo "Lockfile not found." && exit 1; \
   fi
 
@@ -34,8 +34,8 @@ WORKDIR /app
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 expressots
 
+COPY --from=deps --chown=expressots:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressots:nodejs /app/logs ./logs
-COPY --from=builder --chown=expressots:nodejs /app/node_modules ./node_modules
 COPY --from=builder --chown=expressots:nodejs /app/dist ./dist
 COPY --from=builder --chown=expressots:nodejs app/entrypoint.sh app/register-path.js app/.env app/tsconfig.json app/package.json ./
 
@@ -43,5 +43,4 @@ USER expressots
 
 EXPOSE 3000
 
-ENTRYPOINT ["sh", "entrypoint.sh"] 
-
+ENTRYPOINT ["sh", "entrypoint.sh"]
