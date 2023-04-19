@@ -4,12 +4,12 @@ import { IFindAllResponseDTO } from "./findall-user.dto";
 
 @provide(FindAllUserUseCase)
 class FindAllUserUseCase {
-    constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
-    async execute(): Promise<IFindAllResponseDTO[] | null> {
-        const users = await this.userRepository.findAll();
-        return users;
-    }
+  async execute(): Promise<IFindAllResponseDTO[] | null> {
+    const users = await this.userRepository.findAll();
+    return users;
+  }
 }
 
 export { FindAllUserUseCase };

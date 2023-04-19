@@ -8,59 +8,54 @@ import generateToken from "@providers/helpers/generateToken";
 
 @provide(LoginUserUsecase)
 class LoginUserUsecase {
-    constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
-    async execute(data: ILoginUserDTO): Promise<ILoginUserResponseDTO | null> {
-        const { email, password } = data;
+  async execute(data: ILoginUserDTO): Promise<ILoginUserResponseDTO | null> {
+    const { email, password } = data;
 
-        const findUser = await this.userRepository.findByEmail(email);
+    const findUser = await this.userRepository.findByEmail(email);
 
-        if (!findUser) {
-            Report.Error(
-                new AppError(
-                    StatusCode.Unauthorized,
-                    "User not a found",
-                    "login-user-usecase",
-                ),
-            );
+    if (!findUser) {
+      Report.Error(
+        new AppError(
+          StatusCode.Unauthorized,
+          "User not a found",
+          "login-user-usecase",
+        ),
+      );
 
-            return null;
-        }
-
-        let response: ILoginUserResponseDTO;
-
-        const validPassword = await comparePasswords(
-            password,
-            findUser.password,
-        );
-
-        if (!validPassword) {
-            Report.Error(
-                new AppError(
-                    StatusCode.Unauthorized,
-                    "Email or password are is incorrect",
-                    "login-user-usecase",
-                ),
-            );
-
-            return null;
-        }
-
-        const token = generateToken({
-            email: findUser.email,
-            name: findUser.name,
-            id: findUser.id,
-        });
-
-        response = {
-            token,
-            name: findUser.name,
-            email: findUser.email,
-            status: "success",
-        };
-
-        return response;
+      return null;
     }
+
+    const validPassword = await comparePasswords(password, findUser.password);
+
+    if (!validPassword) {
+      Report.Error(
+        new AppError(
+          StatusCode.Unauthorized,
+          "Email or password are is incorrect",
+          "login-user-usecase",
+        ),
+      );
+
+      return null;
+    }
+
+    const token = generateToken({
+      email: findUser.email,
+      name: findUser.name,
+      id: findUser.id,
+    });
+
+    const response: ILoginUserResponseDTO = {
+      token,
+      name: findUser.name,
+      email: findUser.email,
+      status: "success",
+    };
+
+    return response;
+  }
 }
 
 export { LoginUserUsecase };

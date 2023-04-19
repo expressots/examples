@@ -5,18 +5,18 @@ import { FindAllUserUseCase } from "./findall-user.usecase";
 
 @controller("/user")
 class FindAllUserController extends BaseController {
-    constructor(private FindAllUserUseCase: FindAllUserUseCase) {
-        super("create-user-controller");
-    }
+  constructor(private FindAllUserUseCase: FindAllUserUseCase) {
+    super("create-user-controller");
+  }
 
-    @httpGet("/")
-    execute(@response() res: IFindAllResponseDTO[]): any {
-        return this.callUseCaseAsync(
-            this.FindAllUserUseCase.execute(),
-            res,
-            StatusCode.OK,
-        );
-    }
+  @httpGet("/")
+  execute(@response() res: IFindAllResponseDTO[]): any {
+    return this.callUseCaseAsync(
+      this.FindAllUserUseCase.execute(),
+      res,
+      StatusCode.OK,
+    );
+  }
 }
 
 export { FindAllUserController };

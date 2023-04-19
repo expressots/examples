@@ -1,21 +1,21 @@
 import { provide } from "inversify-binding-decorators";
 import {
-    IPokebattleHistoryRequestDTO,
-    IPokebattleHistoryResponseDTO,
+  IPokebattleHistoryRequestDTO,
+  IPokebattleHistoryResponseDTO,
 } from "./pokebattle.dto";
 import { HistoryRepository } from "@repositories/history/history.repository";
 
 @provide(PokebattleUseCase)
 class PokebattleUseCase {
-    constructor(private historyRepository: HistoryRepository) {}
+  constructor(private historyRepository: HistoryRepository) {}
 
-    async execute(
-        params: IPokebattleHistoryRequestDTO,
-    ): Promise<IPokebattleHistoryResponseDTO[]> {
-        const response = await this.historyRepository.findAll(params.id);
+  async execute(
+    params: IPokebattleHistoryRequestDTO,
+  ): Promise<IPokebattleHistoryResponseDTO[]> {
+    const response = await this.historyRepository.findAll(params.id);
 
-        return response;
-    }
+    return response;
+  }
 }
 
 export { PokebattleUseCase };

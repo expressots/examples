@@ -1,6 +1,6 @@
 interface IFindAllResponseDTO {
-    name: string;
-    email: string;
+  name: string;
+  email: string;
 }
 
 export { IFindAllResponseDTO };

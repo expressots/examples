@@ -8,63 +8,61 @@ import generateToken from "@providers/helpers/generateToken";
 
 @provide(CreateUserUseCase)
 class CreateUserUseCase {
-    constructor(private userRepository: UserRepository) {}
+  constructor(private userRepository: UserRepository) {}
 
-    async execute(
-        data: ICreateUserDTO,
-    ): Promise<ICreateUserResponseDTO | null> {
-        try {
-            const { name, email, password } = data;
+  async execute(data: ICreateUserDTO): Promise<ICreateUserResponseDTO | null> {
+    try {
+      const { name, email, password } = data;
 
-            const findUser = await this.userRepository.findByEmail(email);
+      const findUser = await this.userRepository.findByEmail(email);
 
-            if (findUser) {
-                Report.Error(
-                    new AppError(
-                        StatusCode.BadRequest,
-                        "User already exists",
-                        "create-user-usecase",
-                    ),
-                );
-            }
+      if (findUser) {
+        Report.Error(
+          new AppError(
+            StatusCode.BadRequest,
+            "User already exists",
+            "create-user-usecase",
+          ),
+        );
+      }
 
-            const user: IUserDTO = await this.userRepository.create(
-                new User(name, email, password),
-            );
+      const user: IUserDTO = await this.userRepository.create(
+        new User(name, email, password),
+      );
 
-            if (!user) {
-                Report.Error(
-                    new AppError(
-                        StatusCode.BadRequest,
-                        "Registry error",
-                        "create-user-usecase",
-                    ),
-                );
-            }
+      if (!user) {
+        Report.Error(
+          new AppError(
+            StatusCode.BadRequest,
+            "Registry error",
+            "create-user-usecase",
+          ),
+        );
+      }
 
-            let response: ICreateUserResponseDTO;
+      let response: ICreateUserResponseDTO;
 
-            if (user !== null) {
-                const token = generateToken({
-                    email: user.email,
-                    name: user.name,
-                    id: user.id,
-                });
+      if (user !== null) {
+        const token = generateToken({
+          email: user.email,
+          name: user.name,
+          id: user.id,
+        });
 
-                response = {
-                    token,
-                    name: user.name,
-                    email: user.email,
-                    status: "success",
-                };
-                return response;
-            }
+        response = {
+          token,
+          name: user.name,
+          email: user.email,
+          status: "success",
+        };
+        return response;
+      }
 
-            return null;
-        } catch (error: any) {
-            throw error;
-        }
+      return null;
+    } catch (error: any) {
+      throw error;
     }
+  }
 }
 
 export { CreateUserUseCase };

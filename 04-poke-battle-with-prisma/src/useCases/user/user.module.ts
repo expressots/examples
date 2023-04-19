@@ -5,10 +5,10 @@ import { LoginUserController } from "./login/login-user.controller";
 import { GetUserController } from "./getUser/getuser-user.controller";
 
 const UserModule = CreateModule([
-    CreateUserController,
-    FindAllUserController,
-    LoginUserController,
-    GetUserController,
+  CreateUserController,
+  FindAllUserController,
+  LoginUserController,
+  GetUserController,
 ]);
 
 export { UserModule };

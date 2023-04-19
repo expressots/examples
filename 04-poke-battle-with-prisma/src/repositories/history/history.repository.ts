@@ -9,62 +9,62 @@ import { randomUUID } from "crypto";
 
 @provide(HistoryRepository)
 class HistoryRepository implements IHistoryRepository {
-    private readonly repository = prismaClient;
+  private readonly repository = prismaClient;
 
-    async findAll(id: string): Promise<IHistoryDTO[]> {
-        const historys = await this.repository.history.findMany({
-            where: {
-                playerId: id,
-            },
-        });
+  async findAll(id: string): Promise<IHistoryDTO[]> {
+    const historys = await this.repository.history.findMany({
+      where: {
+        playerId: id,
+      },
+    });
 
-        return historys.map((history) => {
-            const log = history.log as {
-                turn: number;
-                attacker: string;
-                defender: string;
-                attack: string;
-                attackType: string;
-                damage: number;
-            }[];
-            return this.mapToDTO({ ...history, log });
-        });
-    }
+    return historys.map((history) => {
+      const log = history.log as {
+        turn: number;
+        attacker: string;
+        defender: string;
+        attack: string;
+        attackType: string;
+        damage: number;
+      }[];
+      return this.mapToDTO({ ...history, log });
+    });
+  }
 
-    async create(history: IHistoryDTO): Promise<History> {
-        const createHistory = await this.repository.history.create({
-            data: mapHistoryToPrisma({
-                ...history,
-            }),
-        });
+  async create(history: IHistoryDTO): Promise<History> {
+    const createHistory = await this.repository.history.create({
+      data: mapHistoryToPrisma({
+        ...history,
+      }),
+    });
 
-        const log = createHistory.log as {
-            turn: number;
-            attacker: string;
-            defender: string;
-            attack: string;
-            attackType: string;
-            damage: number;
-        }[];
+    const log = createHistory.log as {
+      turn: number;
+      attacker: string;
+      defender: string;
+      attack: string;
+      attackType: string;
+      damage: number;
+    }[];
 
-        return this.mapToDTO({ ...createHistory, log });
-    }
+    return this.mapToDTO({ ...createHistory, log });
+  }
 
-    private mapToDTO(history: IHistoryDTO): History {
-        const newHistory = new History(
-            history.log,
-            history.userName,
-            history.playerId,
-            history.winner,
-            history.pokemon1,
-            history.pokemon2,
-            history.id || randomUUID(),
-            history.winnerName,
-            history.loserName,
-            history.isDraw,
-        );
-        return newHistory;
-    }
+  private mapToDTO(history: IHistoryDTO): History {
+    const newHistory = new History(
+      history.log,
+      history.userName,
+      history.playerId,
+      history.winner,
+      history.pokemon1,
+      history.pokemon2,
+      history.id || randomUUID(),
+      history.winnerName,
+      history.loserName,
+      history.isDraw,
+    );
+    return newHistory;
+  }
 }
 
 export { HistoryRepository };

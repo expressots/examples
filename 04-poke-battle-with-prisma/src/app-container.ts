@@ -6,10 +6,10 @@ import { UserModule } from "@useCases/user/user.module";
 const appContainer = new AppContainer();
 
 const container = appContainer.create([
-    // Add your modules here
-    PingModule,
-    UserModule,
-    PokebattleModule,
+  // Add your modules here
+  PingModule,
+  UserModule,
+  PokebattleModule,
 ]);
 
 export { container };
