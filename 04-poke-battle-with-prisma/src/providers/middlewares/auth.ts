@@ -1,4 +1,4 @@
-import { decodeToken } from "@providers/helpers/decodeToken";
+import { JWTProvider } from "@providers/encrypt/jwt/jwt.provider";
 import { Request, Response, NextFunction } from "express";
 
 function authMiddleware(
@@ -6,6 +6,8 @@ function authMiddleware(
   res: Response,
   next: NextFunction,
 ): Response<any, Record<string, any>> | void {
+  const jwtProvider: JWTProvider = new JWTProvider();
+
   const token = req.headers["authorization"];
 
   if (!token) {
@@ -15,7 +17,7 @@ function authMiddleware(
   }
 
   try {
-    const decoded = decodeToken(token);
+    const decoded = jwtProvider.decodeToken(token);
 
     req.headers["decoded"] = decoded as string;
     next();

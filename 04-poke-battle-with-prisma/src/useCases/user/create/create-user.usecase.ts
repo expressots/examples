@@ -4,11 +4,14 @@ import { ICreateUserDTO, ICreateUserResponseDTO } from "./create-user.dto";
 import { UserRepository } from "@repositories/user/user.repository";
 import { User } from "@entities/user.entity";
 import { IUserDTO } from "@repositories/user/user.dto";
-import generateToken from "@providers/helpers/generateToken";
+import { JWTProvider } from "@providers/encrypt/jwt/jwt.provider";
 
 @provide(CreateUserUseCase)
 class CreateUserUseCase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private jwtProvider: JWTProvider,
+  ) {}
 
   async execute(data: ICreateUserDTO): Promise<ICreateUserResponseDTO | null> {
     try {
@@ -43,7 +46,7 @@ class CreateUserUseCase {
       let response: ICreateUserResponseDTO;
 
       if (user !== null) {
-        const token = generateToken({
+        const token = this.jwtProvider.generateToken({
           email: user.email,
           name: user.name,
           id: user.id,

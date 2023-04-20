@@ -6,7 +6,7 @@ import {
 } from "./pokebattle-battle.dto";
 import { HistoryRepository } from "@repositories/history/history.repository";
 
-import { TYPE_CHART } from "@providers/helpers/typechart";
+import { TYPE_CHART } from "@providers/battle/typechart";
 import {
   PokemonAbilities,
   PokemonForm,
@@ -15,7 +15,7 @@ import {
   PokemonSprites,
   PokemonTypes,
   PokemonMoves,
-} from "@providers/interfaces";
+} from "@providers/types/battle";
 
 @provide(PokebattleBattleUseCase)
 class PokebattleBattleUseCase {

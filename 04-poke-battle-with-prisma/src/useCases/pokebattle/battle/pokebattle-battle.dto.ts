@@ -1,4 +1,4 @@
-import { TPokemonContentEndpoint } from "@providers/interfaces";
+import { TPokemonContentEndpoint } from "@providers/types/battle";
 
 interface IPokebattleBattleRequestDTO {
   pokemon1: TPokemonContentEndpoint;

@@ -1,18 +1,16 @@
+import { History } from "@entities/history.entity";
+import { PrismaClientProvider } from "@providers/database/orm/prisma/prisma-client.provider";
 import { provide } from "inversify-binding-decorators";
-import { prismaClient } from "@providers/database/prismaClient";
 import { IHistoryRepository } from "./history-repository.interface";
 import { IHistoryDTO } from "./history.dto";
-import { History } from "@entities/history.entity";
-
-import { mapHistoryToPrisma } from "@providers/helpers/mapToPrisma";
 import { randomUUID } from "crypto";
 
 @provide(HistoryRepository)
 class HistoryRepository implements IHistoryRepository {
-  private readonly repository = prismaClient;
+  constructor(private prismaClient: PrismaClientProvider) {}
 
   async findAll(id: string): Promise<IHistoryDTO[]> {
-    const historys = await this.repository.history.findMany({
+    const historys = await this.prismaClient.client.history.findMany({
       where: {
         playerId: id,
       },
@@ -32,10 +30,8 @@ class HistoryRepository implements IHistoryRepository {
   }
 
   async create(history: IHistoryDTO): Promise<History> {
-    const createHistory = await this.repository.history.create({
-      data: mapHistoryToPrisma({
-        ...history,
-      }),
+    const createHistory = await this.prismaClient.client.history.create({
+      data: this.prismaClient.mapToPrisma<IHistoryDTO, History>(history),
     });
 
     const log = createHistory.log as {

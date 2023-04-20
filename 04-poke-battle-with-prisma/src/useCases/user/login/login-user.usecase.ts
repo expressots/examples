@@ -3,12 +3,15 @@ import { provide } from "inversify-binding-decorators";
 import { ILoginUserDTO, ILoginUserResponseDTO } from "./login-user.dto";
 import { UserRepository } from "@repositories/user/user.repository";
 
-import { comparePasswords } from "@providers/helpers/comparePasswords";
-import generateToken from "@providers/helpers/generateToken";
+import { comparePasswords } from "@providers/encrypt/bcrypt/compare-passwords.provider";
+import { JWTProvider } from "@providers/encrypt/jwt/jwt.provider";
 
 @provide(LoginUserUsecase)
 class LoginUserUsecase {
-  constructor(private userRepository: UserRepository) {}
+  constructor(
+    private userRepository: UserRepository,
+    private jwtProvider: JWTProvider,
+  ) {}
 
   async execute(data: ILoginUserDTO): Promise<ILoginUserResponseDTO | null> {
     const { email, password } = data;
@@ -41,7 +44,7 @@ class LoginUserUsecase {
       return null;
     }
 
-    const token = generateToken({
+    const token = this.jwtProvider.generateToken({
       email: findUser.email,
       name: findUser.name,
       id: findUser.id,

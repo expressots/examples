@@ -4,6 +4,7 @@ import { provide } from "inversify-binding-decorators";
 @provide(User)
 class User {
   private _id: string;
+
   private _password: string;
   public name: string;
   public email: string;
