@@ -21,6 +21,7 @@ class UserRepository implements IUserRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
+    console.log("===>", email);
     const user = await prismaClient.user.findUnique({
       where: { email },
     });
