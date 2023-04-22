@@ -26,8 +26,8 @@ model Battle {
   playerId   String // relation scalar field  (used in the `@relation` attribute above)
   userName   String
   winner     Boolean
-  pokemon1   String
-  pokemon2   String
+  pokemon1   Json
+  pokemon2   Json
   winnerName String
   loserName  String
   isDraw     Boolean

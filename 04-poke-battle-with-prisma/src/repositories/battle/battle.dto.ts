@@ -1,9 +1,11 @@
+import { IPokeBattleHistoryEndpoint } from "@providers/types/battle";
+
 interface IBattleDTO {
   id?: string;
   userName: string;
   playerId: string;
-  pokemon1: string;
-  pokemon2: string;
+  pokemon1: IPokeBattleHistoryEndpoint;
+  pokemon2: IPokeBattleHistoryEndpoint;
   log: {
     turn: number;
     attacker: string;

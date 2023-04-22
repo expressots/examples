@@ -1,3 +1,4 @@
+import { IPokeBattleHistoryEndpoint } from "@providers/types/battle";
 import { randomUUID } from "crypto";
 import { provide } from "inversify-binding-decorators";
 
@@ -15,8 +16,16 @@ class Battle {
   }[];
   public userName: string;
   public winner: boolean;
-  public pokemon1: string;
-  public pokemon2: string;
+  public pokemon1: {
+    name: string;
+    sprites: string[];
+    types: string[];
+  };
+  public pokemon2: {
+    name: string;
+    sprites: string[];
+    types: string[];
+  };
   public winnerName: string;
   public loserName: string;
   public isDraw: boolean;
@@ -33,8 +42,16 @@ class Battle {
     userName: string,
     playerId: string,
     winner: boolean,
-    pokemon1: string,
-    pokemon2: string,
+    pokemon1: {
+      name: string;
+      sprites: string[];
+      types: string[];
+    },
+    pokemon2: {
+      name: string;
+      sprites: string[];
+      types: string[];
+    },
     id: string,
     winnerName: string,
     loserName: string,

@@ -7,6 +7,7 @@ import { provide } from "inversify-binding-decorators";
 import { IBattleRepository } from "./battle-repository.interface";
 import { IBattleDTO } from "./battle.dto";
 import { randomUUID } from "crypto";
+import { IPokeBattleHistoryEndpoint } from "@providers/types/battle";
 
 @provide(BattleRepository)
 class BattleRepository implements IBattleRepository {
@@ -29,7 +30,10 @@ class BattleRepository implements IBattleRepository {
         attackType: string;
         damage: number;
       }[];
-      return this.mapToDTO({ ...battle, log });
+
+      const pokemon1 = battle.pokemon1 as unknown as IPokeBattleHistoryEndpoint;
+      const pokemon2 = battle.pokemon1 as unknown as IPokeBattleHistoryEndpoint;
+      return this.mapToDTO({ ...battle, log, pokemon1, pokemon2 });
     });
   }
 
@@ -46,8 +50,9 @@ class BattleRepository implements IBattleRepository {
       attackType: string;
       damage: number;
     }[];
-
-    return this.mapToDTO({ ...createHistory, log });
+    const pokemon1 = battle.pokemon1 as IPokeBattleHistoryEndpoint;
+    const pokemon2 = battle.pokemon1 as IPokeBattleHistoryEndpoint;
+    return this.mapToDTO({ ...createHistory, log, pokemon1, pokemon2 });
   }
 
   private mapToDTO(battle: IBattleDTO): Battle {

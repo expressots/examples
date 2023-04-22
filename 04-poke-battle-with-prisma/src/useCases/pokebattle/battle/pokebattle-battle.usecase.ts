@@ -142,8 +142,26 @@ class PokebattleBattleUseCase {
           return {
             log: battleLog,
             playerId: id,
-            pokemon1: pokemon1.name,
-            pokemon2: pokemon2.name,
+            pokemon1: {
+              name: pokemon1.name,
+              sprites: [
+                pokemon1.sprites.versions["generation-v"]["black-white"]
+                  .animated.front_default,
+                pokemon1.sprites.front_default,
+                pokemon1.sprites.other["official-artwork"].front_default,
+              ],
+              types: pokemon1.types.map((item) => item.type.name),
+            },
+            pokemon2: {
+              name: pokemon2.name,
+              sprites: [
+                pokemon2.sprites.versions["generation-v"]["black-white"]
+                  .animated.front_default,
+                pokemon2.sprites.front_default,
+                pokemon2.sprites.other["official-artwork"].front_default,
+              ],
+              types: pokemon2.types.map((item) => item.type.name),
+            },
             userName: name,
             winner: true,
             winnerName: pokemon1.name,
@@ -159,8 +177,26 @@ class PokebattleBattleUseCase {
           return {
             log: battleLog,
             playerId: id,
-            pokemon1: pokemon1.name,
-            pokemon2: pokemon2.name,
+            pokemon1: {
+              name: pokemon1.name,
+              sprites: [
+                pokemon1.sprites.versions["generation-v"]["black-white"]
+                  .animated.front_default,
+                pokemon1.sprites.front_default,
+                pokemon1.sprites.other["official-artwork"].front_default,
+              ],
+              types: pokemon1.types.map((item) => item.type.name),
+            },
+            pokemon2: {
+              name: pokemon2.name,
+              sprites: [
+                pokemon2.sprites.versions["generation-v"]["black-white"]
+                  .animated.front_default,
+                pokemon2.sprites.front_default,
+                pokemon2.sprites.other["official-artwork"].front_default,
+              ],
+              types: pokemon2.types.map((item) => item.type.name),
+            },
             userName: name,
             winner: false,
             winnerName: pokemon2.name,
@@ -172,8 +208,26 @@ class PokebattleBattleUseCase {
       return {
         log: battleLog,
         playerId: id,
-        pokemon1: pokemon1.name,
-        pokemon2: pokemon2.name,
+        pokemon1: {
+          name: pokemon1.name,
+          sprites: [
+            pokemon1.sprites.versions["generation-v"]["black-white"].animated
+              .front_default,
+            pokemon1.sprites.front_default,
+            pokemon1.sprites.other["official-artwork"].front_default,
+          ],
+          types: pokemon1.types.map((item) => item.type.name),
+        },
+        pokemon2: {
+          name: pokemon2.name,
+          sprites: [
+            pokemon2.sprites.versions["generation-v"]["black-white"].animated
+              .front_default,
+            pokemon2.sprites.front_default,
+            pokemon2.sprites.other["official-artwork"].front_default,
+          ],
+          types: pokemon2.types.map((item) => item.type.name),
+        },
         userName: name,
         winner: false,
         loserName: pokemon1.name,

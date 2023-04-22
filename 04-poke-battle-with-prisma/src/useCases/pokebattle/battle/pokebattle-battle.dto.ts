@@ -1,4 +1,4 @@
-import { TPokemonContentEndpoint } from "@providers/types/battle";
+import { IPokeBattleHistoryEndpoint, TPokemonContentEndpoint } from "@providers/types/battle";
 
 interface IPokebattleBattleRequestDTO {
   pokemon1: TPokemonContentEndpoint;
@@ -18,8 +18,8 @@ interface IPokebattleBattleResponseDTO {
   id?: string;
   userName: string;
   playerId: string;
-  pokemon1: string;
-  pokemon2: string;
+  pokemon1: IPokeBattleHistoryEndpoint;
+  pokemon2: IPokeBattleHistoryEndpoint;
   log: IPokebattleBattleLogResponseDTO[];
   winner: boolean;
   winnerName: string;
