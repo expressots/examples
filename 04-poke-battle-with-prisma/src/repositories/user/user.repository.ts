@@ -1,38 +1,43 @@
-import { provide } from "inversify-binding-decorators";
+import { User } from "@entities/user.entity";
+import {
+  PrismaClientProvider,
+  prismaClient,
+} from "@providers/database/orm/prisma/prisma-client.provider";
 import bcrypt from "bcrypt";
-import { prismaClient } from "@providers/database/prismaClient";
+import { provide } from "inversify-binding-decorators";
 import { IUserRepository } from "./user-repository.interface";
 import { IUserDTO } from "./user.dto";
-import { User } from "@entities/user.entity";
-import { mapToPrisma } from "@providers/helpers/mapToPrisma";
 
 @provide(UserRepository)
 class UserRepository implements IUserRepository {
-  private readonly repository = prismaClient;
+  constructor(private prismaProvider: PrismaClientProvider) {}
 
   async find(id: string): Promise<{ name: string; email: string } | null> {
-    const user = await this.repository.user.findUnique({ where: { id } });
+    const user = await prismaClient.user.findUnique({
+      where: { id },
+    });
 
     return user ? this.mapToDTOWithoutPassword(user) : null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    const user = await this.repository.user.findUnique({
+    const user = await prismaClient.user.findUnique({
       where: { email },
     });
     return user ? this.mapToDTO(user) : null;
   }
 
   async findAll(): Promise<{ name: string; email: string }[]> {
-    const users = await this.repository.user.findMany();
+    const users = await prismaClient.user.findMany();
 
     return users.map((user) => this.mapToFindAllDTO(user));
   }
 
   async create(user: IUserDTO): Promise<User> {
     const password = await bcrypt.hash(user.password, 10);
-    const createdUser = await this.repository.user.create({
-      data: mapToPrisma({
+
+    const createdUser = await prismaClient.user.create({
+      data: this.prismaProvider.mapToPrisma<IUserDTO, User>({
         ...user,
         password,
       }),
@@ -41,7 +46,7 @@ class UserRepository implements IUserRepository {
   }
 
   async update(id: string, user: IUserDTO): Promise<User | null> {
-    const updatedUser = await this.repository.user.update({
+    const updatedUser = await prismaClient.user.update({
       where: { id },
       data: user,
     });
@@ -50,7 +55,7 @@ class UserRepository implements IUserRepository {
   }
 
   async delete(id: string): Promise<boolean> {
-    await this.repository.user.delete({ where: { id } });
+    await prismaClient.user.delete({ where: { id } });
     return true;
   }
 

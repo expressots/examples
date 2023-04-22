@@ -6,44 +6,45 @@
 
 A Typescript + [Node.js]("https://nodejs.org/en/") lightweight framework for quick building scalable, easy to read and maintain, server-side applications 🚀
 
-## Philosophy
+## Poke Battle Game Example Author
 
-Expresso TS is a framework designed to make the lives of the developers easier by providing a structure for building server-side applications that is clear to read, maintain and scale. The philosophy is centered around the idea that developers should not have to waste time on repetitive tasks such as setting up a logging system, authentication, error handling, database connection, and organizing the project for better maintainability.
+Poke battle is an automatic battle of pokemons with authentication system and history of battles per user.
+An opinionated Expresso TS Project. 
 
-Expresso TS offers a solution that is designed to help developers jump ahead and focus on the most important part of the development process, writing code. The framework provides capability to the developers to quickly extend the framework functionalities by creating providers and adding them to the dependency injection system. This way, developers can use these new functionalities throughout the entire application without having to worry about the complexities of integrating it into the system.
+- Ariel Betti
+- [GitHub](https://github.com/ArielBetti)
+- [Twitch](https://www.twitch.tv/asancode)
+- [Linkedin](https://www.linkedin.com/in/ariel-betti/)
 
-## Installation
+## How to use
+
+1 - Clone the repository and install the dependencies.
 
 ```bash
-npm run install
+git clone https://github.com/expressots/examples.git
+
+cd examples/04-poke-battle-with-prisma
+
+npm install or yarn install
 ```
 
-## Running the app
+2 - Install Postgres docker image
+
+Pull official postgres image and create a container with a database called `pokebattle`
 
 ```bash
-# development
-npm run start
-
-# build
-npm run build
-
-# production mode
-npm run start:prod
+docker pull postgres:latest
 ```
 
-## Test
+3 - Run the the application
 
 ```bash
-# unit tests
-npm run test
-
-# test coverage
-npm run test:cov
+npm start or yarn start
 ```
 
 ## Support
 
-Expresso TS is an MIT-Licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you want to join the them, as we are currently looking for sponsors and backers, please [contact us](mailto: br.developer@gmail.com)
+Expresso TS is an MIT-Licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you want to join the them, as we are currently looking for sponsors and backers, please [contact us](richard.zampieri@expresso-ts.com)
 
 ## Stay in touch
 
