@@ -1,9 +1,26 @@
 import { useMutation } from "@tanstack/react-query";
 import { createUser } from "../service/createUser";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "../routes";
+import { useAuthActions } from "../store";
+import { TCreateRequest } from "../types";
+import { mountAuthRoute } from "../utils/mountAuthRoute";
 
 const useCreateUserMutation = () => {
+  const navigation = useNavigate();
+  const { setToken, setUser } = useAuthActions();
+
   return useMutation({
-    mutationFn: (body: any) => createUser(body),
+    mutationFn: (body: TCreateRequest) => createUser(body),
+    onSuccess: (res) => {
+      setUser({
+        email: res.email,
+        id: res.id,
+        name: res.name,
+      });
+      setToken(res.token);
+      navigation(mountAuthRoute(ROUTE.home));
+    },
   });
 };
 

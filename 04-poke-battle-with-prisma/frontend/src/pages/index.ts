@@ -1,3 +1,5 @@
+import Home from "./Home";
 import Login from "./Login";
+import Logout from "./Logout";
 
-export { Login };
+export { Home, Login, Logout };

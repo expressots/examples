@@ -1,6 +1,8 @@
-export const ROUTE = {
-  arena: "trainer/arena",
-  home: "trainer/home",
-  login: "/",
-  user: "trainer/user",
-};
+export enum ROUTE {
+  auth = "/trainer/",
+  arena = "arena",
+  home = "home",
+  login = "/",
+  user = "user",
+  logout = "/logout",
+}
