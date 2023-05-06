@@ -1,6 +1,6 @@
 import { requester } from "../api/requester";
 import { ENDPOINT } from "../endpoints";
-import { TAuthResponse, TCreateRequest } from "../types";
+import { TAuthResponse, TCreateRequest } from "./types";
 
 export const createUser = async (
   body: TCreateRequest,

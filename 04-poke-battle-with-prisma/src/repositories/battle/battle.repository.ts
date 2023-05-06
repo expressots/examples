@@ -32,7 +32,7 @@ class BattleRepository implements IBattleRepository {
       }[];
 
       const pokemon1 = battle.pokemon1 as unknown as IPokeBattleHistoryEndpoint;
-      const pokemon2 = battle.pokemon1 as unknown as IPokeBattleHistoryEndpoint;
+      const pokemon2 = battle.pokemon2 as unknown as IPokeBattleHistoryEndpoint;
       return this.mapToDTO({ ...battle, log, pokemon1, pokemon2 });
     });
   }
@@ -51,7 +51,7 @@ class BattleRepository implements IBattleRepository {
       damage: number;
     }[];
     const pokemon1 = battle.pokemon1 as IPokeBattleHistoryEndpoint;
-    const pokemon2 = battle.pokemon1 as IPokeBattleHistoryEndpoint;
+    const pokemon2 = battle.pokemon2 as IPokeBattleHistoryEndpoint;
     return this.mapToDTO({ ...createHistory, log, pokemon1, pokemon2 });
   }
 

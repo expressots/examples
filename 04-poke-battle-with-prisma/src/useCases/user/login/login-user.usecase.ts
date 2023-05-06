@@ -55,6 +55,7 @@ class LoginUserUsecase {
       name: findUser.name,
       email: findUser.email,
       status: "success",
+			id: findUser.id,
     };
 
     return response;

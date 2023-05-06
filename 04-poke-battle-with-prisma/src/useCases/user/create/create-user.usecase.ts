@@ -53,6 +53,7 @@ class CreateUserUseCase {
         });
 
         response = {
+          id: `${user.id}`,
           token,
           name: user.name,
           email: user.email,

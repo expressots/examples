@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { TUser } from "../types";
+import { TUser } from "../service/types";
 
 type AuthStore = {
   user: TUser | null;

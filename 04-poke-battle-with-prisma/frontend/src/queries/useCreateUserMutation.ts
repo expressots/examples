@@ -3,7 +3,7 @@ import { createUser } from "../service/createUser";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../routes";
 import { useAuthActions } from "../store";
-import { TCreateRequest } from "../types";
+import { TCreateRequest } from "../service/types";
 import { mountAuthRoute } from "../utils/mountAuthRoute";
 
 const useCreateUserMutation = () => {

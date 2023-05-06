@@ -1,22 +1,3 @@
-export type TUser = {
-  id: string;
-  name: string;
-  email: string;
-};
-
-export type TLoginRequest = {
-  email: string;
-  password: string;
-};
-
-export type TCreateRequest = {
-  name: string;
-} & TLoginRequest;
-
-export type TAuthResponse = {
-  token: string;
-} & TUser;
-
 export type TPokemonListEndpoint = {
   count: number;
   next: string;

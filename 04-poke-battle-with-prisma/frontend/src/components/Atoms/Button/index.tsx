@@ -1,4 +1,5 @@
 import { forwardRef } from "react";
+import { twMerge } from "tailwind-merge";
 import { Slot } from "@radix-ui/react-slot";
 
 // types
@@ -12,7 +13,10 @@ const Button = forwardRef<HTMLButtonElement, TButton>(
       <Component
         {...rest}
         ref={ref}
-        className={`${className} bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors`}
+        className={twMerge(
+          "bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors",
+          className,
+        )}
       >
         {children}
       </Component>

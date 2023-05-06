@@ -9,6 +9,7 @@ interface ICreateUserResponseDTO {
   email: string;
   token: string;
   status: string;
+	id: string;
 }
 
 export { ICreateUserDTO, ICreateUserResponseDTO };

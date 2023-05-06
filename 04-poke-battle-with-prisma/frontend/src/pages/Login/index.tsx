@@ -6,7 +6,7 @@ import { ROUTE } from "../../routes";
 import { Button, InlineLoading, Input, Sidebar } from "../../components";
 import axios from "axios";
 import { twMerge } from "tailwind-merge";
-import { TCreateRequest } from "../../types";
+import { TCreateRequest } from "../../service/types";
 
 type TLoginTabs = "login" | "create";
 

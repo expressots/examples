@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAuthActions, useUser } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../routes";

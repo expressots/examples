@@ -6,4 +6,5 @@ export const ENDPOINT = {
   userBattleHistory: "/pokebattle/history",
   listOfPokemons: "/pokemon",
   pokemon: "/pokemon/", // recebe parametro id.
+	history: "/pokebattle/history", // recebe parametro id.
 };

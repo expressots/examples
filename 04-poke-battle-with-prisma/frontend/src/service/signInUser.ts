@@ -1,6 +1,6 @@
 import { requester } from "../api/requester";
 import { ENDPOINT } from "../endpoints";
-import { TLoginRequest, TAuthResponse } from "../types";
+import { TAuthResponse, TLoginRequest } from "./types";
 
 export const signInUser = async (
   body: TLoginRequest,
