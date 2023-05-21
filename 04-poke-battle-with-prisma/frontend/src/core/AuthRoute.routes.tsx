@@ -19,25 +19,27 @@ const AuthRoute = () => {
   return (
     <>
       <Header>
-        <div className="flex items-start justify-start gap-2">
-          <img
-            className="h-12 w-12 rounded-sm"
-            src={user?.avatar?.url}
-            alt={`custom avatar`}
-          />
-          <div className="animate-leftSlide flex justify-between items-start flex-col">
-            <p className="font-thin">sign in as</p>
-            <h1 className="font-semibold">{user.name}</h1>
+        <div className="w-full flex items-center justify-between">
+          <div className="flex items-start justify-start gap-2">
+            <img
+              className="h-12 w-12 rounded-sm"
+              src={user?.avatar?.url}
+              alt={`custom avatar`}
+            />
+            <div className="animate-leftSlide flex justify-between items-start flex-col">
+              <p className="font-thin">sign in as</p>
+              <h1 className="font-semibold">{user.name}</h1>
+            </div>
           </div>
+          <Button className="bg-red-500 border-red-800">
+            <p
+              onClick={() => navigate(ROUTE.logout)}
+              className="text-white font-semibold"
+            >
+              Logout
+            </p>
+          </Button>
         </div>
-        <Button className="bg-error">
-          <p
-            onClick={() => navigate(ROUTE.logout)}
-            className="text-error-content"
-          >
-            Logout
-          </p>
-        </Button>
       </Header>
       <Outlet />
     </>

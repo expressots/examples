@@ -1,13 +1,14 @@
 import { useState } from "react";
-import { Collapse } from "../../components";
+import { Button } from "../../components";
 import CollapseRow from "../../components/Atoms/CollapseRow";
-import CustomAvatar from "../../components/Molecules/CustomAvatar";
 import { useGetUserHistoryQuery } from "../../queries/useGetUserHistoryQuery";
 import { useUser } from "../../store";
+import { useNavigate } from "react-router-dom";
+import { ROUTE } from "../../routes";
 
 const Home = () => {
   const user = useUser();
-	const [test, setTest] = useState<any>();
+  const navigate = useNavigate();
   const {
     data: historyData,
     isFetching: historyLoading,
@@ -15,11 +16,16 @@ const Home = () => {
   } = useGetUserHistoryQuery(`${user?.id}`);
 
   return (
-    <div className="container px-4 mx-auto pt-20 min-h-screen max-w-4xl">
-      <CustomAvatar
-				setConstructAvatar={setTest}
-			/>
+    <div className="container px-4 mx-auto pt-20 min-h-screen">
       <div className="flex flex-col gap-2 justify-center items-start">
+        <div className="flex flex-col gap-2">
+          <Button
+            onClick={() => navigate(`${ROUTE.auth}${ROUTE.arena}`)}
+            className="font-semibold"
+          >
+            Go to battle
+          </Button>
+        </div>
         <h2 className="text-lg font-semibold">Your matchs</h2>
         <div className="pb-10 flex flex-col w-full">
           {historyData?.map((history) => (

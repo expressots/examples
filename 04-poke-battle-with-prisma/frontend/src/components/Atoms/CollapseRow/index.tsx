@@ -23,7 +23,7 @@ const CollapseRow = ({
     <div
       ref={ref}
       className={clsx(
-        "transition-colors border-l-2 hover:bg-base-300 bg-base-100 w-full border-t py-1 border-t-base-300 text-base-content flex flex-col justify-start items-start overflow-hidden",
+        "transition-colors border-l-2 hover:bg-base-300 bg-base-200 w-full border-t py-1 border-t-base-300 text-base-content flex flex-col justify-start items-start overflow-hidden",
         winner ? "border-l-success" : "border-l-error",
         collapseToggle && "bg-base-300",
       )}
@@ -76,7 +76,7 @@ const CollapseRow = ({
       </div>
       <div
         className={clsx(
-          "mt-2 transition-all w-full overflow-auto",
+          "mt-2 transition-all delay-75 w-full overflow-auto",
           collapseToggle ? "h-96 bg-base-200" : "h-0",
         )}
       >
