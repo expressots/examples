@@ -3,7 +3,7 @@ export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
-			keyframes: {
+      keyframes: {
         fadeIn: {
           "0%, 100%": {
             transform: "translateY(50px)",
@@ -29,7 +29,7 @@ export default {
         fadeIn: "fadeIn 0.5s  ease forwards",
         leftSlide: "leftSlide 0.6s  ease forwards",
       },
-		},
+    },
   },
-  plugins: [require("daisyui")],
+  plugins: [require("daisyui"), require("tailwind-scrollbar-hide")],
 };

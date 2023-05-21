@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { Collapse } from "../../components";
+import CollapseRow from "../../components/Atoms/CollapseRow";
+import CustomAvatar from "../../components/Molecules/CustomAvatar";
 import { useGetUserHistoryQuery } from "../../queries/useGetUserHistoryQuery";
 import { useUser } from "../../store";
 
 const Home = () => {
   const user = useUser();
+	const [test, setTest] = useState<any>();
   const {
     data: historyData,
     isFetching: historyLoading,
@@ -11,12 +15,15 @@ const Home = () => {
   } = useGetUserHistoryQuery(`${user?.id}`);
 
   return (
-    <div className="container px-4 mx-auto pt-20 min-h-screen">
+    <div className="container px-4 mx-auto pt-20 min-h-screen max-w-4xl">
+      <CustomAvatar
+				setConstructAvatar={setTest}
+			/>
       <div className="flex flex-col gap-2 justify-center items-start">
         <h2 className="text-lg font-semibold">Your matchs</h2>
-        <div className="flex flex-col gap-2 w-full">
+        <div className="pb-10 flex flex-col w-full">
           {historyData?.map((history) => (
-            <Collapse
+            <CollapseRow
               isDraw={history.isDraw}
               log={history.log}
               loserName={history.loserName}

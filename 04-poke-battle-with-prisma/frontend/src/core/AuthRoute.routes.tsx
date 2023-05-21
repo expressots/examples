@@ -19,9 +19,16 @@ const AuthRoute = () => {
   return (
     <>
       <Header>
-        <div className="animate-leftSlide flex justify-between items-start flex-col">
-          <p className="font-thin">sign in as</p>
-          <h1 className="font-semibold">{user.name}</h1>
+        <div className="flex items-start justify-start gap-2">
+          <img
+            className="h-12 w-12 rounded-sm"
+            src={user?.avatar?.url}
+            alt={`custom avatar`}
+          />
+          <div className="animate-leftSlide flex justify-between items-start flex-col">
+            <p className="font-thin">sign in as</p>
+            <h1 className="font-semibold">{user.name}</h1>
+          </div>
         </div>
         <Button className="bg-error">
           <p
@@ -32,7 +39,7 @@ const AuthRoute = () => {
           </p>
         </Button>
       </Header>
-      <Outlet />;
+      <Outlet />
     </>
   );
 };

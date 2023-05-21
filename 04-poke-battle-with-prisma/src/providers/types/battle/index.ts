@@ -20,9 +20,9 @@ export type TPokemonContentEndpoint = {
 };
 
 export interface IPokeBattleHistoryEndpoint {
-	name: string;
-	sprites: string[],
-	types: string[];
+  name: string;
+  sprites: string[];
+  types: string[];
 }
 
 export type PokemonAbilities = {

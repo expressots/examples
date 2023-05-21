@@ -67,7 +67,10 @@ const Collapse = ({
         )}
       >
         {log.map((log) => (
-          <div className="flex flex-col justify-center items-start p-2 bg-base-200 text-base-content  shadow-sm rounded-md">
+          <div
+            key={`${log.attacker}-${log.turn}`}
+            className="flex flex-col justify-center items-start p-2 bg-base-200 text-base-content  shadow-sm rounded-md"
+          >
             <p className="font-thin">Turn: {log.turn}</p>
             <p>{`${log.attacker} used ${log.attack}`}</p>
             <p>{`${log.defender} received ${log.damage} damage!`}</p>

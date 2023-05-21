@@ -1,12 +1,6 @@
-import { Battle } from "@entities/battle.entity";
-import { User } from "@entities/user.entity";
 import { PrismaClient } from "@prisma/client";
-import { IBattleDTO } from "@repositories/battle/battle.dto";
-import { IUserDTO } from "@repositories/user/user.dto";
 import { provide } from "inversify-binding-decorators";
 
-type PrismaType = User | Battle;
-type DTOType = IUserDTO | IBattleDTO | Battle;
 export const prismaClient: PrismaClient = new PrismaClient();
 
 @provide(PrismaClientProvider)

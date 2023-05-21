@@ -17,6 +17,7 @@ const useCreateUserMutation = () => {
         email: res.email,
         id: res.id,
         name: res.name,
+				avatar: res.avatar,
       });
       setToken(res.token);
       navigation(mountAuthRoute(ROUTE.home));

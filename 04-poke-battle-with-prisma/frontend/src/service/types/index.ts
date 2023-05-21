@@ -1,7 +1,41 @@
+import {
+  TAvatarBackgroundColor,
+  TAvatarEarrings,
+  TAvatarEyebrows,
+  TAvatarEyes,
+  TAvatarFeatures,
+  TAvatarGlasses,
+  TAvatarHair,
+  TAvatarHairColor,
+  TAvatarMouth,
+  TAvatarSkinColor,
+} from "../../types";
+
+export interface IUserAvatar {
+  backgroundColor: TAvatarBackgroundColor;
+  earrings: TAvatarEarrings;
+  earringsProbability: 0 | 100;
+  glassesProbability: 0 | 100;
+  featuresProbability: 0 | 100;
+  hairProbability: 100;
+  eyebrows: TAvatarEyebrows;
+  eyes: TAvatarEyes;
+  features: TAvatarFeatures;
+  glasses: TAvatarGlasses;
+  hair: TAvatarHair;
+  hairColor: TAvatarHairColor;
+  mouth: TAvatarMouth;
+  seed: string;
+  skinColor: TAvatarSkinColor;
+  flip: boolean;
+  url?: string;
+}
+
 export type TUser = {
   id: string;
   name: string;
   email: string;
+  avatar: IUserAvatar;
 };
 
 export type TLoginRequest = {
@@ -11,6 +45,7 @@ export type TLoginRequest = {
 
 export type TCreateRequest = {
   name: string;
+  avatar: IUserAvatar;
 } & TLoginRequest;
 
 export type TAuthResponse = {

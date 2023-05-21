@@ -14,7 +14,7 @@ const Button = forwardRef<HTMLButtonElement, TButton>(
         {...rest}
         ref={ref}
         className={twMerge(
-          "bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors",
+          "border-2 border-b-8 border-primary-focus bg-primary text-primary-content flex cursor-pointer items-center justify-center gap-1 rounded-md p-2 shadow-md  transition-colors",
           className,
         )}
       >

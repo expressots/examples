@@ -16,7 +16,31 @@ model User {
   email    String   @unique
   name     String
   password String
+  avatar   Avatar?
   Battle   Battle[]
+}
+
+model Avatar {
+  id                  String @id @default(uuid())
+  backgroundColor     String
+  earrings            String
+  earringsProbability Int
+  glassesProbability  Int
+  featuresProbability Int
+  hairProbability     Int
+  eyebrows            String
+  eyes                String
+  features            String
+  glasses             String
+  hair                String
+  hairColor           String
+  mouth               String
+  seed                String
+  skinColor           String
+  flip                Boolean
+  user                User   @relation(fields: [userId], references: [id])
+  userId              String @unique
+  url                 String
 }
 
 model Battle {
