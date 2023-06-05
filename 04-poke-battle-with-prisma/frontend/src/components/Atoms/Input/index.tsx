@@ -3,9 +3,10 @@ import { twMerge } from "tailwind-merge";
 
 // types
 import type { TInput } from "./types";
+import { clsxm } from "../../../utils/clsxm";
 
 // ::
-const Input = ({ label, classLabel, ...rest }: TInput) => {
+const Input = ({ label, classLabel, className, ...rest }: TInput) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const inputId = useId();
 
@@ -21,9 +22,9 @@ const Input = ({ label, classLabel, ...rest }: TInput) => {
       <input
         ref={inputRef}
         placeholder={rest.placeholder || ""}
-        className={twMerge(
+        className={clsxm(
           "border-2 border-b-8 border-base-300 peer bg-base-200 placeholder:text-base-200-content text-base-200-content w-full p-2 outline-none rounded-md shadow-md",
-          rest.className,
+          className,
         )}
         {...rest}
         id={`${inputId}-${label}`}

@@ -5,7 +5,7 @@ export const requester = (
   contentType?: string,
 ) => {
   const service = axios.create({
-    baseURL: import.meta.env.VITE_POKEBATTLE_API || config?.baseURL,
+    baseURL: import.meta.env.VITE_BACKEND_URL || config?.baseURL,
     ...config,
   });
 

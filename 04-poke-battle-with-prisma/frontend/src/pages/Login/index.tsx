@@ -1,14 +1,18 @@
-import { FormEvent, useRef, useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 import expressoTSIcon from "../../assets/expressoicon.svg";
 import useCreateUserMutation from "../../queries/useCreateUserMutation";
 import useSignInUserMutation from "../../queries/useSignInUserMutation";
-import { Button, InlineLoading, Input } from "../../components";
+import { Button, InlineLoading, Input, ThemeSelector } from "../../components";
 import axios from "axios";
 import { twMerge } from "tailwind-merge";
 import { IUserAvatar, TCreateRequest } from "../../service/types";
 import CustomAvatar from "../../components/Molecules/CustomAvatar";
-import { CubeIcon } from "@radix-ui/react-icons";
+import { CubeIcon } from "@heroicons/react/24/outline";
 import { defaultAvatarEnum } from "../../utils/enums";
+import { useUser } from "../../store";
+import { useNavigate } from "react-router-dom";
+import { mountAuthRoute } from "../../utils/mountAuthRoute";
+import { ROUTE } from "../../routes";
 
 type TLoginTabs = "login" | "create";
 
@@ -22,6 +26,9 @@ const defaultAvatar: IUserAvatar = {
 };
 
 const Login = () => {
+  const navigation = useNavigate();
+
+  const user = useUser();
   const [tab, setTab] = useState<TLoginTabs>("login");
   const [avatar, setAvatar] = useState<IUserAvatar>(defaultAvatar);
   const {
@@ -29,6 +36,7 @@ const Login = () => {
     isLoading: createUserLoading,
     error: createUserError,
   } = useCreateUserMutation();
+
   const {
     mutate: signInUser,
     isLoading: signInUserLoading,
@@ -51,6 +59,12 @@ const Login = () => {
 
     return signInUser(formJson);
   }
+
+  useEffect(() => {
+    if (user) {
+      navigation(mountAuthRoute(ROUTE.home));
+    }
+  }, []);
 
   return (
     <div className="max-w-4xl container py-10 px-4 m-auto flex flex-col gap-5 items-start justify-center min-h-screen w-full">
@@ -118,6 +132,11 @@ const Login = () => {
                   {signInUserError.response?.data?.error}
                 </p>
               )}
+              {axios.isAxiosError(createUserError) && (
+                <p className="text-error">
+                  {createUserError.response?.data?.error}
+                </p>
+              )}
             </div>
             <InlineLoading isLoading={signInUserLoading} text="Carregando..." />
           </div>
@@ -148,18 +167,21 @@ const Login = () => {
           </div>
         </form>
       </div>
-      <p className="flex gap-2 items-center justify-center bg-zinc-900 text-white p-1 rounded-md border-4 border-b-8 border-zinc-950">
-        Made with{" "}
-        <a
-          href="https://github.com/expressots/expressots"
-          target="_blank"
-          className="flex items-center justify-center font-semibold text-green-400"
-          rel="noreferrer"
-        >
-          ExpressoTS
-          <img className="h-6 w-6" src={expressoTSIcon} alt="" />
-        </a>
-      </p>
+      <div className="flex justify-between w-full">
+        <p className="flex gap-2 items-center justify-center bg-zinc-900 text-white p-1 rounded-md border-4 border-b-8 border-zinc-950">
+          Made with{" "}
+          <a
+            href="https://github.com/expressots/expressots"
+            target="_blank"
+            className="flex items-center justify-center font-semibold text-green-400"
+            rel="noreferrer"
+          >
+            ExpressoTS
+            <img className="h-6 w-6" src={expressoTSIcon} alt="" />
+          </a>
+        </p>
+        <ThemeSelector />
+      </div>
     </div>
   );
 };

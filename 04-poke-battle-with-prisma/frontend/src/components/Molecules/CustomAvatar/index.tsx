@@ -3,7 +3,6 @@ import { stringify } from "qs";
 import { createAvatar } from "@dicebear/core";
 import * as style from "@dicebear/adventurer";
 import Svg from "react-inlinesvg";
-import { HandIcon } from "@radix-ui/react-icons";
 
 // types
 
@@ -40,7 +39,7 @@ import {
   TAvatarSkinColor,
 } from "../../../types";
 import { TCustomAvatarProps } from "./types";
-import { ChevronUpDownIcon } from "@heroicons/react/24/outline";
+import { ChevronUpDownIcon, HandRaisedIcon } from "@heroicons/react/24/outline";
 import clsx from "clsx";
 import { defaultAvatarEnum } from "../../../utils/enums";
 
@@ -213,7 +212,7 @@ const CustomAvatar = ({
           )}
         >
           <p className="max-w-xs my-5 flex gap-2 items-center justify-start bg-info font-semibold text-info-content rounded-sm p-2">
-            <HandIcon className="h-5 w-5" />
+            <HandRaisedIcon className="h-5 w-5" />
             Drag to the side
           </p>
           <AvatarOptionSelector

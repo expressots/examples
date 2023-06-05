@@ -1,10 +1,13 @@
-import { useState } from "react";
-import { Button } from "../../components";
-import CollapseRow from "../../components/Atoms/CollapseRow";
 import { useGetUserHistoryQuery } from "../../queries/useGetUserHistoryQuery";
 import { useUser } from "../../store";
 import { useNavigate } from "react-router-dom";
 import { ROUTE } from "../../routes";
+import {
+  BattleHistory,
+  Button,
+  CollapseRow,
+  StatusCard,
+} from "../../components";
 
 const Home = () => {
   const user = useUser();
@@ -17,32 +20,27 @@ const Home = () => {
 
   return (
     <div className="container px-4 mx-auto pt-20 min-h-screen">
-      <div className="flex flex-col gap-2 justify-center items-start">
-        <div className="flex flex-col gap-2">
+      <div className="flex flex-col gap-5 justify-center items-start">
+        <div className="flex items-start flex-col justify-start gap-2 flex-wrap">
+          <StatusCard
+            description={`Click on the "Go to the Arena" button to play`}
+            type="info"
+            title="How to play"
+          />
           <Button
             onClick={() => navigate(`${ROUTE.auth}${ROUTE.arena}`)}
             className="font-semibold"
           >
-            Go to battle
+            Go to the Arena
           </Button>
         </div>
         <h2 className="text-lg font-semibold">Your matchs</h2>
         <div className="pb-10 flex flex-col w-full">
-          {historyData?.map((history) => (
-            <CollapseRow
-              isDraw={history.isDraw}
-              log={history.log}
-              loserName={history.loserName}
-              playerId={history.playerId}
-              pokemon1={history.pokemon1}
-              pokemon2={history.pokemon2}
-              userName={history.userName}
-              winner={history.winner}
-              winnerName={history.winnerName}
-              id={history.id}
-              key={history.id}
-            />
-          ))}
+          <BattleHistory
+            history={historyData}
+            error={historyError}
+            loading={historyLoading}
+          />
         </div>
       </div>
     </div>

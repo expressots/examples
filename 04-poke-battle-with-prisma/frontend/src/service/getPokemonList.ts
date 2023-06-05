@@ -10,9 +10,9 @@ import type { TPokemonListEndpoint } from "../types";
 export const getPokemonList = async (
   offSet: string,
 ): Promise<TPokemonListEndpoint> => {
-  const { data } = await requester().get<TPokemonListEndpoint>(
-    offSet || `${ENDPOINT.listOfPokemons}`,
-  );
+  const { data } = await requester({
+    baseURL: import.meta.env.VITE_POKEAPI_URL,
+  }).get<TPokemonListEndpoint>(offSet || `${ENDPOINT.listOfPokemons}`);
 
   return data;
 };
