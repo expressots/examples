@@ -1,3 +1,4 @@
+import * as PrismaModelType from "@prisma/client";
 import { User } from "@entities/user.entity";
 import {
   PrismaClientProvider,
@@ -6,7 +7,7 @@ import {
 import bcrypt from "bcrypt";
 import { provide } from "inversify-binding-decorators";
 import { IUserRepository } from "./user-repository.interface";
-import { IUserDTO } from "./user.dto";
+import { IUserAvatarDTO, IUserDTO } from "./user.dto";
 
 @provide(UserRepository)
 class UserRepository implements IUserRepository {
@@ -15,44 +16,84 @@ class UserRepository implements IUserRepository {
   async find(id: string): Promise<{ name: string; email: string } | null> {
     const user = await prismaClient.user.findUnique({
       where: { id },
+      include: {
+        avatar: true,
+      },
     });
 
-    return user ? this.mapToDTOWithoutPassword(user) : null;
+    const avatar = user?.avatar as unknown as IUserAvatarDTO;
+
+    return user ? this.mapToDTOWithoutPassword({ ...user, avatar }) : null;
   }
 
   async findByEmail(email: string): Promise<User | null> {
     const user = await prismaClient.user.findUnique({
       where: { email },
+      include: {
+        avatar: true,
+      },
     });
-    return user ? this.mapToDTO(user) : null;
+
+    const avatar = user?.avatar as unknown as IUserAvatarDTO;
+
+    return user ? this.mapToDTO({ ...user, avatar }) : null;
   }
 
   async findAll(): Promise<{ name: string; email: string }[]> {
-    const users = await prismaClient.user.findMany();
+    const users = await prismaClient.user.findMany({
+      include: {
+        avatar: true,
+      },
+    });
 
-    return users.map((user) => this.mapToFindAllDTO(user));
+    return users.map((user) => {
+      const avatar = user?.avatar as unknown as IUserAvatarDTO;
+
+      return this.mapToFindAllDTO({ ...user, avatar });
+    });
   }
 
   async create(user: IUserDTO): Promise<User> {
     const password = await bcrypt.hash(user.password, 10);
-
-    const createdUser = await prismaClient.user.create({
-      data: this.prismaProvider.mapToPrisma<IUserDTO, User>({
-        ...user,
-        password,
-      }),
+    const prismaObject = this.prismaProvider.mapToPrisma<
+      IUserDTO,
+      PrismaModelType.User
+    >({
+      ...user,
+      password,
     });
 
-    return this.mapToDTO(createdUser);
+    const createdUser = await prismaClient.user.create({
+      include: {
+        avatar: true,
+      },
+      data: {
+        ...prismaObject,
+        avatar: {
+          create: {
+            ...user.avatar,
+          },
+        },
+      },
+    });
+
+    const avatar = createdUser.avatar as unknown as IUserAvatarDTO;
+
+    return this.mapToDTO({
+      ...createdUser,
+      avatar,
+    });
   }
 
   async update(id: string, user: IUserDTO): Promise<User | null> {
     const updatedUser = await prismaClient.user.update({
       where: { id },
-      data: user,
+      data: this.prismaProvider.mapToPrisma<IUserDTO, PrismaModelType.User>(
+        user,
+      ),
     });
 
-    return this.mapToDTO(updatedUser);
+    return this.mapToDTO({ ...updatedUser, avatar: user.avatar });
   }
 
   async delete(id: string): Promise<boolean> {
@@ -61,25 +102,45 @@ class UserRepository implements IUserRepository {
   }
 
   private mapToDTO(user: IUserDTO): User {
-    const newUser = new User(user.name, user.email, user.password, user.id);
+    const newUser = new User(
+      user.name,
+      user.email,
+      user.password,
+      user.avatar,
+      user.id,
+    );
     return newUser;
   }
 
   private mapToDTOWithoutPassword(user: IUserDTO): {
     name: string;
+    avatar: IUserAvatarDTO;
     email: string;
     id: string;
   } {
-    const newUser = new User(user.name, user.email, user.password, user.id);
+    const newUser = new User(
+      user.name,
+      user.email,
+      user.password,
+      user.avatar,
+      user.id,
+    );
     return {
       name: newUser.name,
       email: newUser.email,
+      avatar: newUser.avatar,
       id: newUser.id,
     };
   }
 
   private mapToFindAllDTO(user: IUserDTO): { name: string; email: string } {
-    const newUser = new User(user.name, user.email, user.password, user.id);
+    const newUser = new User(
+      user.name,
+      user.email,
+      user.password,
+      user.avatar,
+      user.id,
+    );
     return {
       name: newUser.name,
       email: newUser.email,

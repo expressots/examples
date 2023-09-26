@@ -19,6 +19,12 @@ export type TPokemonContentEndpoint = {
   weight: number;
 };
 
+export interface IPokeBattleHistoryEndpoint {
+  name: string;
+  sprites: string[];
+  types: string[];
+}
+
 export type PokemonAbilities = {
   ability: PokemonAbility;
   is_hidden: boolean;

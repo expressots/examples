@@ -4,7 +4,7 @@ import {
   IPokebattleBattleRequestDTO,
   IPokebattleBattleResponseDTO,
 } from "./pokebattle-battle.dto";
-import { HistoryRepository } from "@repositories/history/history.repository";
+import { BattleRepository } from "@repositories/battle/battle.repository";
 
 import { TYPE_CHART } from "@providers/battle/typechart";
 import {
@@ -19,7 +19,7 @@ import {
 
 @provide(PokebattleBattleUseCase)
 class PokebattleBattleUseCase {
-  constructor(private historyRepository: HistoryRepository) {}
+  constructor(private historyRepository: BattleRepository) {}
 
   async execute({
     body,
@@ -30,6 +30,29 @@ class PokebattleBattleUseCase {
   }): Promise<IPokebattleBattleResponseDTO | null> {
     const { name, id } = token;
     const { pokemon1, pokemon2 } = body;
+
+    const challenger = {
+      name: pokemon1.name,
+      sprites: [
+        pokemon1.sprites.versions["generation-v"]["black-white"].animated
+          .front_default,
+        pokemon1.sprites.front_default,
+        pokemon1.sprites.other["official-artwork"].front_default,
+      ],
+      types: pokemon1.types.map((item) => item.type.name),
+    };
+
+    const challenged = {
+      name: pokemon2.name,
+      sprites: [
+        pokemon2.sprites.versions["generation-v"]["black-white"].animated
+          .front_default,
+        pokemon2.sprites.front_default,
+        pokemon2.sprites.other["official-artwork"].front_default,
+      ],
+      types: pokemon2.types.map((item) => item.type.name),
+    };
+
     const onFight = async (): Promise<IPokebattleBattleResponseDTO> => {
       // Log da batalha
       const battleLog = [] as IPokebattleBattleLogResponseDTO[];
@@ -142,12 +165,12 @@ class PokebattleBattleUseCase {
           return {
             log: battleLog,
             playerId: id,
-            pokemon1: pokemon1.name,
-            pokemon2: pokemon2.name,
+            pokemon1: challenger,
+            pokemon2: challenged,
             userName: name,
             winner: true,
-            winnerName: pokemon1.name,
-            loserName: pokemon2.name,
+            winnerName: challenger.name,
+            loserName: challenged.name,
             isDraw: false,
           };
         }
@@ -159,30 +182,33 @@ class PokebattleBattleUseCase {
           return {
             log: battleLog,
             playerId: id,
-            pokemon1: pokemon1.name,
-            pokemon2: pokemon2.name,
+            pokemon1: challenger,
+            pokemon2: challenged,
             userName: name,
             winner: false,
-            winnerName: pokemon2.name,
-            loserName: pokemon1.name,
+            winnerName: challenged.name,
+            loserName: challenger.name,
             isDraw: false,
           };
         }
       }
+
       return {
         log: battleLog,
         playerId: id,
-        pokemon1: pokemon1.name,
-        pokemon2: pokemon2.name,
+        pokemon1: challenger,
+        pokemon2: challenged,
         userName: name,
         winner: false,
-        loserName: pokemon1.name,
-        winnerName: pokemon2.name,
+        loserName: challenger.name,
+        winnerName: challenged.name,
         isDraw: true,
       };
     };
 
-    const userHistory = await this.historyRepository.create(await onFight());
+    const battle = await onFight();
+
+    const userHistory = await this.historyRepository.create(battle);
 
     return userHistory;
   }
